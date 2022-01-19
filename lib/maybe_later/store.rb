@@ -1,7 +1,7 @@
-module AfterAction
+module MaybeLater
   class Store
     def self.instance
-      Thread.current[:after_action_store] ||= new
+      Thread.current[:maybe_later_store] ||= new
     end
 
     attr_reader :callbacks

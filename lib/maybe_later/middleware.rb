@@ -1,4 +1,4 @@
-module AfterAction
+module MaybeLater
   class Middleware
     RACK_AFTER_REPLY = "rack.after_reply"
 

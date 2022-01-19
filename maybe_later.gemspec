@@ -1,15 +1,13 @@
-# frozen_string_literal: true
-
-require_relative "lib/after_action/version"
+require_relative "lib/maybe_later/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "after_action"
-  spec.version = AfterAction::VERSION
+  spec.name = "maybe_later"
+  spec.version = MaybeLater::VERSION
   spec.authors = ["Justin Searls"]
   spec.email = ["searls@gmail.com"]
 
   spec.summary = "Run code after the current Rack response or Rails action completes"
-  spec.homepage = "https://github.com/testdouble/after_action"
+  spec.homepage = "https://github.com/testdouble/maybe_later"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
 

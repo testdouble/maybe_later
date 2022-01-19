@@ -1,4 +1,4 @@
-module AfterAction
+module MaybeLater
   class QueuesCallback
     def call(blk)
       if blk.respond_to?(:call)

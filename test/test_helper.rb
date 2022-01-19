@@ -1,4 +1,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "after_action"
+require "maybe_later"
 
 require "minitest/autorun"

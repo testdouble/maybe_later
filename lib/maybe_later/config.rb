@@ -1,4 +1,4 @@
-module AfterAction
+module MaybeLater
   class Config
     attr_accessor :after_each, :on_error
 

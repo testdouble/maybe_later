@@ -1,6 +1,6 @@
-module AfterAction
+module MaybeLater
   class Railtie < ::Rails::Railtie
-    initializer "after_action.middleware" do
+    initializer "maybe_later.middleware" do
       config.app_middleware.use Middleware
     end
   end
