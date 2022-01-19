@@ -1,0 +1,7 @@
+require "test_helper"
+
+class AfterActionTest < Minitest::Test
+  def test_that_it_has_a_version_number
+    refute_nil ::AfterAction::VERSION
+  end
+end
