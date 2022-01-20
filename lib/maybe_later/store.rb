@@ -9,10 +9,6 @@ module MaybeLater
       @callbacks = []
     end
 
-    def any_callbacks?
-      !@callbacks.empty?
-    end
-
     def add_callback(callable)
       @callbacks << callable
     end

@@ -8,12 +8,14 @@ module MaybeLater
 
     def call(env)
       status, headers, body = @app.call(env)
-      if Store.instance.any_callbacks?
+      if Store.instance.callbacks.any?
         env[RACK_AFTER_REPLY] ||= []
         env[RACK_AFTER_REPLY] << -> {
           RunsCallbacks.new.call
         }
-        headers["Connection"] = "close"
+        if Store.instance.callbacks.any? { |cb| cb.inline }
+          headers["Connection"] = "close"
+        end
       end
       [status, headers, body]
     end

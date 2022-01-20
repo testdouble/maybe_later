@@ -50,7 +50,7 @@ MaybeLater.run {
 ```
 
 Each block passed to `MaybeLater.run` will be run after the HTTP response is
-sent and the response will include a `"Connection: close` header.
+sent.
 
 If the code you're calling needs to be executed in the same thread that's
 handling the HTTP request, you can pass `inline: true`:
@@ -61,9 +61,15 @@ MaybeLater.run(inline: true) {
 }
 ```
 
-And your code will be run right after the HTTP response is sent (note: this can
-potentially saturate the server's available threads and effectively block
-subsequent HTTP requests!)
+And your code will be run right after the HTTP response is sent. Additionally,
+if there are any inline tasks to be run, the response will include a
+`"Connection: close` header so that the browser doesn't sit waiting on its
+connection while the web thread executes the deferred code.
+
+_[**Warning about `inline`:** running
+slow inline tasks runs the risk of saturating the server's available threads
+listening for connections, effectively shifting the slowness of one request onto
+later ones!]_
 
 
 ## Configuration

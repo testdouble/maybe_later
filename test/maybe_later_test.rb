@@ -37,22 +37,23 @@ class MaybeLaterTest < Minitest::Test
     _, headers, _ = invoke_middleware!
     sleep 0.01 # <- let threads do stuff
 
-    assert "close", headers["Connection"]
     assert_includes chores, :laundry
     assert_includes chores, :tidy
     assert_equal 3, call_count
     assert_equal 1, errors_encountered.size
     error = errors_encountered.first
     assert_equal "a stink", error.message
+    assert_nil headers["Connection"] # No inline runs
   end
 
   def test_inline_runs
     called = false
     MaybeLater.run(inline: true) { called = true }
 
-    invoke_middleware!
+    _, headers, _ = invoke_middleware!
 
     assert called
+    assert_equal "close", headers["Connection"]
   end
 
   def test_inline_by_default
