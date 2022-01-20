@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     maybe_later (0.0.1)
+      concurrent-ruby (~> 1.1.9)
       railties (>= 6.0.0)
 
 GEM

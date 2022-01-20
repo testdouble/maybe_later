@@ -7,9 +7,15 @@ module MaybeLater
     end
 
     def call(env)
-      env[RACK_AFTER_REPLY] ||= []
-      env[RACK_AFTER_REPLY] << -> { RunsCallbacks.new.call }
-      @app.call(env)
+      status, headers, body = @app.call(env)
+      if Store.instance.any_callbacks?
+        env[RACK_AFTER_REPLY] ||= []
+        env[RACK_AFTER_REPLY] << -> {
+          RunsCallbacks.new.call
+        }
+        headers["Connection"] = "close"
+      end
+      [status, headers, body]
     end
   end
 end
