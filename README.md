@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/79303/150394856-67252204-2857-412c-b379-851144776728.jpg" width="90%"/>
+
 # maybe_later - get slow code out of your users' way
 
 Maybe you've been in this situation: you want to call some Ruby while responding
