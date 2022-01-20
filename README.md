@@ -72,7 +72,7 @@ The gem offers a few configuration options:
 
 ```ruby
 MaybeLater.config do |config|
-  # Will be called if a `MaybeLater.run {}` callback errors, e.g.:
+  # Will be called if a block passed to MaybeLater.run raises an error
   config.on_error = ->(error) {
     # e.g. Honeybadger.notify(error)
   }
@@ -92,7 +92,7 @@ end
 ## Help! Why isn't my code running?
 
 If the blocks you pass to `MaybeLater.run` aren't running, possible
-explanations:
+explanations include:
 
 * Because the blocks passed to `MaybeLater.run` are themselves stored in a
   thread-local array, if you invoke `MaybeLater.run` from a thread that isn't
