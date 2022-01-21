@@ -9,13 +9,12 @@ module MaybeLater
     # first relevant request, since the pool will have been created
     def initialize
       @pool = Concurrent::FixedThreadPool.new(MaybeLater.config.max_threads)
+      @invokes_callback = InvokesCallback.new
     end
 
-    def run(callable)
+    def run(callback)
       @pool.post do
-        callable.call
-      rescue => e
-        MaybeLater.config.on_error&.call(e)
+        @invokes_callback.call(callback)
       end
     end
   end

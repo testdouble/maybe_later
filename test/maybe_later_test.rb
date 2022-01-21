@@ -35,6 +35,7 @@ class MaybeLaterTest < Minitest::Test
     MaybeLater.run { chores << :tidy }
 
     _, headers, _ = invoke_middleware!
+    assert_equal 0, call_count # <-- nothing could have happened yet!
     sleep 0.01 # <- let threads do stuff
 
     assert_includes chores, :laundry

@@ -3,6 +3,7 @@ require_relative "maybe_later/config"
 require_relative "maybe_later/middleware"
 require_relative "maybe_later/queues_callback"
 require_relative "maybe_later/runs_callbacks"
+require_relative "maybe_later/invokes_callback"
 require_relative "maybe_later/store"
 require_relative "maybe_later/thread_pool"
 require_relative "maybe_later/railtie" if defined?(Rails)

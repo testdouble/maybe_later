@@ -1,19 +1,18 @@
 module MaybeLater
   class RunsCallbacks
+    def initialize
+      @invokes_callback = InvokesCallback.new
+    end
+
     def call
       store = Store.instance
-      config = MaybeLater.config
 
       store.callbacks.each do |callback|
         if callback.inline
-          callback.callable.call
+          @invokes_callback.call(callback)
         else
-          ThreadPool.instance.run(callback.callable)
+          ThreadPool.instance.run(callback)
         end
-      rescue => e
-        config.on_error&.call(e)
-      ensure
-        config.after_each&.call
       end
 
       store.clear_callbacks!
