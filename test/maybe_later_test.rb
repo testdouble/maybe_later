@@ -2,12 +2,15 @@ require "test_helper"
 require "rack"
 
 class MaybeLaterTest < Minitest::Test
+  i_suck_and_my_tests_are_order_dependent!
+
   def setup
     MaybeLater.config do |config|
       config.after_each = nil
       config.on_error = nil
       config.inline_by_default = false
       config.max_threads = 5
+      config.invoke_even_if_server_is_unsupported = false
     end
   end
 
@@ -97,10 +100,47 @@ class MaybeLaterTest < Minitest::Test
     assert_equal "No block was passed to MaybeLater.run", e.message
   end
 
+  def test_with_server_that_doesnt_support_rack_after_reply
+    called = false
+    MaybeLater.run(inline: true) { called = true }
+
+    stderr = with_fake_stderr do
+      invoke_middleware!(supports_after_reply: false)
+    end
+
+    refute called
+    assert_equal <<~ERR, stderr.read
+      This server may not support 'rack.after_reply' callbacks. To
+      ensure that your tasks are executed, consider enabling:
+
+        config.invoke_even_if_server_is_unsupported = true
+
+      Note that this option, when combined with `inline: true` can result
+      in delayed flushing of HTTP responses by the server (defeating the
+      purpose of the gem.
+    ERR
+  end
+
+  def test_unsupported_server_that_calls_anyway
+    MaybeLater.config do |config|
+      config.invoke_even_if_server_is_unsupported = true
+    end
+
+    called = false
+    MaybeLater.run(inline: true) { called = true }
+
+    invoke_middleware!(supports_after_reply: false)
+
+    assert called
+  end
+
   private
 
-  def invoke_middleware!
+  def invoke_middleware!(supports_after_reply: true)
     env = Rack::MockRequest.env_for
+    if supports_after_reply
+      env[MaybeLater::Middleware::RACK_AFTER_REPLY] ||= []
+    end
     subject = MaybeLater::Middleware.new(->(env) { [200, {}, "success"] })
     result = subject.call(env)
 
@@ -108,5 +148,15 @@ class MaybeLaterTest < Minitest::Test
     env[MaybeLater::Middleware::RACK_AFTER_REPLY]&.first&.call
 
     result
+  end
+
+  def with_fake_stderr(&blk)
+    og_stderr = $stderr
+    fake_stderr = StringIO.new
+    $stderr = fake_stderr
+    blk.call
+    $stderr = og_stderr
+    fake_stderr.rewind
+    fake_stderr
   end
 end

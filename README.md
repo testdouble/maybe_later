@@ -94,6 +94,10 @@ MaybeLater.config do |config|
 
   # How many threads to allocate to the fixed thread pool (default: 5)
   config.max_threads = 5
+
+  # If set to true, will invoke the after_reply tasks even if the server doesn't
+  # provide an array of rack.after_reply array
+  config.invoke_even_if_server_is_unsupported = false
 end
 ```
 
