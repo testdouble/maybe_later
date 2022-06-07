@@ -96,7 +96,10 @@ MaybeLater.config do |config|
   config.max_threads = 5
 
   # If set to true, will invoke the after_reply tasks even if the server doesn't
-  # provide an array of rack.after_reply array
+  # provide a rack.after_reply array.
+  # One reason to do this is if you are using Rails controller tests
+  # (with no webserver) rather than system tests.
+  # config.invoke_even_if_server_is_unsupported = Rails.env.test?
   config.invoke_even_if_server_is_unsupported = false
 end
 ```
