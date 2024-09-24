@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "railties", ">= 6.0.0"
-  spec.add_dependency "concurrent-ruby", "~> 1.1.9"
+  spec.add_dependency "concurrent-ruby", ">= 1.1.9"
 end
