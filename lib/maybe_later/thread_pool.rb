@@ -1,3 +1,5 @@
+require "concurrent"
+
 module MaybeLater
   class ThreadPool
     def self.instance
