@@ -34,6 +34,7 @@ GEM
     erubi (1.10.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    logger (1.7.0)
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -98,6 +99,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  logger
   maybe_later!
   minitest
   pry
