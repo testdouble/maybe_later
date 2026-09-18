@@ -1,3 +1,8 @@
+## [0.0.6] - 2026-09-18
+
+- Fix a `NameError` on `Concurrent::FixedThreadPool` caused by a missing
+  `concurrent-ruby` require that newer Rails versions no longer load for us
+
 ## [0.0.5] - 2026-09-18
 
 - Loosen the `concurrent-ruby` dependency constraint
