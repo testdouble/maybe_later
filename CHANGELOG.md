@@ -1,3 +1,7 @@
+## [0.0.5] - 2026-09-18
+
+- Loosen the `concurrent-ruby` dependency constraint
+
 ## [0.0.4] - 2022-01-24
 
 - Add `invoke_even_if_server_is_unsupported` option to ensure tasks are invoked
